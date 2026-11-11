@@ -1,0 +1,48 @@
+{
+  "name": "@local/dsh-custom-compact",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "共享压缩模型、思考强度和上下文阈值设置，并提供主模型压缩命令。",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20.3",
+    "dsh": ">=0.2.2-rc.1 <0.3.0"
+  },
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "core/*.js",
+    "host/*.js",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "AGENTS.md"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.1.0",
+    "@deepseek-ai/schemastery": "~3.19.0",
+    "@deepseek-ai/dsh-compaction": ">=0.2.2-rc.1 <0.3.0",
+    "@deepseek-ai/dsh-compaction-basic": ">=0.2.2-rc.1 <0.3.0",
+    "@deepseek-ai/dsh-typert-protocol": ">=0.2.2-rc.1 <0.3.0"
+  },
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-settings"
+      ]
+    }
+  }
+}

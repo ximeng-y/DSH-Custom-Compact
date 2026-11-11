@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "DSH-Custom-Compact",
+    "description": "Share a compaction model, reasoning effort and percentage or absolute token threshold across sessions; /defcompact uses the conversation model."
+  }
+}

@@ -1,0 +1,4 @@
+- insert:
+    - id: custom-compact
+      name: '@local/dsh-custom-compact'
+      config: {}

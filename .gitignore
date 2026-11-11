@@ -1,0 +1,17 @@
+node_modules/
+.XMTEMP/
+.cordis/
+.cache/
+coverage/
+dist/
+*.log
+*.tgz
+*.tmp
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini

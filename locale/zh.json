@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "DSH-Custom-Compact",
+    "description": "所有会话共享压缩模型、思考强度与百分比或绝对 token 阈值，支持 /defcompact 使用主模型。"
+  }
+}
