@@ -45,20 +45,22 @@ Remote({ resources: { session: (sessionId) => sessionId } })(CompactSettingsServ
   addInitializer(initialize) { remoteInitializers.push(initialize); },
 });
 
+// 宿主配置表单与工具校验共用同一 JSON Schema 子集，不支持数值范围与字符串长度关键字，
+// 因此这里只描述结构，取值范围由 core/policy.js 的 normalizeSettings 负责。
 const nullable = (schema) => ({ oneOf: [schema, { type: 'null' }] });
 const modelSchema = nullable({
   type: 'object',
   properties: {
-    provider: { type: 'string', minLength: 1, description: '模型目录中的 provider 路由。' },
-    model: { type: 'string', minLength: 1, description: '该 provider 下的模型标识。' },
-    reasoningEffort: nullable({ type: 'string', minLength: 1, description: '该模型支持的思考强度；空值使用默认。' }),
+    provider: { type: 'string', description: '模型目录中的 provider 路由。' },
+    model: { type: 'string', description: '该 provider 下的模型标识。' },
+    reasoningEffort: nullable({ type: 'string', description: '该模型支持的思考强度；空值使用默认。' }),
   },
   required: ['provider', 'model'], additionalProperties: false,
 });
 const properties = {
   thresholdMode: { type: 'string', enum: ['percentage', 'absolute'], description: '只应用所选模式，另一模式的数值保留。' },
-  thresholdPercent: nullable({ type: 'number', exclusiveMinimum: 0, maximum: 100, description: '原生安全余量策略的百分比，空值沿用原生策略。' }),
-  thresholdTokens: nullable({ type: 'integer', minimum: 1, maximum: Number.MAX_SAFE_INTEGER, description: '小于主模型窗口时严格使用该值，否则沿用原生策略。' }),
+  thresholdPercent: nullable({ type: 'number', description: '原生安全余量策略的百分比，空值沿用原生策略。' }),
+  thresholdTokens: nullable({ type: 'number', description: '小于主模型窗口时严格使用该值，否则沿用原生策略。' }),
   compactModel: { ...modelSchema, description: '自定义压缩模型；空值使用当前会话主模型。' },
 };
 
@@ -71,7 +73,7 @@ export function registerSettingsTool(ctx, service) {
       properties: {
         action: { type: 'string', enum: ['get', 'set'], description: 'get 读取；set 保存提供的字段。' },
         settings: { type: 'object', properties, additionalProperties: false, description: 'set 时必填；未提供的字段保留，显式空值恢复默认。' },
-        expectedRevision: { type: 'integer', minimum: 0, description: '可提供 get 返回的 revision；冲突时拒绝保存。' },
+        expectedRevision: { type: 'integer', description: '可提供 get 返回的 revision；冲突时拒绝保存。' },
       },
       required: ['action'], additionalProperties: false,
     },
